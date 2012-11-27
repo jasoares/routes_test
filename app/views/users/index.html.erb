@@ -1,0 +1,31 @@
+<h1>Listing users</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Birth Date</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.name %></td>
+    <td><%= user.email %></td>
+    <td><%= user.bdate %></td>
+    <td><%= link_to 'XML', user_url(user, subdomain: 'api', format: 'xml') %></td>
+    <td><%= link_to 'JSON', user_url(user, subdomain: 'api', :format => 'json') %></td>
+    <td><%= link_to 'Show', user %></td>
+    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= path_methods = methods.reject {|method| method =~ /hash/ }.select {|method| method =~ /api/ } %>
+
+<br />
+
+<%= link_to 'Profile', profile_path %>
