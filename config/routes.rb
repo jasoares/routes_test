@@ -1,12 +1,21 @@
+require 'api_version'
+
 RoutesTest::Application.routes.draw do
 
-  constraints(subdomain: 'api') do
+  constraints subdomain: 'api' do
     scope module: 'api', defaults: { format: 'json' } do
-      scope module: 'v1' do
-        resources :users
+      constraints ApiVersion[1] do
+        scope module: 'v1' do
+          resources :users
+        end
       end
+      constraints ApiVersion[2] do
+        scope module: 'v2' do
+          resources :users
+        end
+      end
+      root to: 'home#welcome'
     end
-    root to: 'home#welcome', defaults: { format: 'json' }
   end
 
   scope 'admin' do
